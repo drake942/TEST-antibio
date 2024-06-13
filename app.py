@@ -19,16 +19,17 @@ data.dropna(subset=required_columns, inplace=True)
 st.title("Application d'Antibioprophylaxie Chirurgicale")
 
 # Page d'accueil
-page = st.selectbox("Choisissez une méthode de recherche", ["Accueil", "Recherche par intitulé opératoire", "Recherche par catégorie"])
+if "page" not in st.session_state:
+    st.session_state.page = "Accueil"
 
-if page == "Accueil":
+if st.session_state.page == "Accueil":
     st.header("Bienvenue")
     if st.button("Recherche par intitulé opératoire"):
         st.session_state.page = "Recherche par intitulé opératoire"
     if st.button("Recherche par catégorie"):
         st.session_state.page = "Recherche par catégorie"
 
-elif page == "Recherche par intitulé opératoire":
+elif st.session_state.page == "Recherche par intitulé opératoire":
     # Recherche globale pour la chirurgie spécifique
     chirurgie_specifique_search = st.text_input("Recherche", key="global_search")
     chirurgies_specifiques = data['Chirurgie Spécifique'].unique()
@@ -72,7 +73,7 @@ elif page == "Recherche par intitulé opératoire":
     else:
         st.markdown("<span style='color: red; font-size: 20px;'>Aucune antibioprophylaxie recommandée trouvée pour cette combinaison.</span>", unsafe_allow_html=True)
 
-elif page == "Recherche par catégorie":
+elif st.session_state.page == "Recherche par catégorie":
     # Sélection du type de chirurgie avec menu déroulant
     type_chirurgie_selection = st.selectbox("Type de Chirurgie", data['Spécialité chirurgicale'].unique())
 
