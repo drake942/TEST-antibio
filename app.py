@@ -15,6 +15,23 @@ for col in required_columns:
 # Nettoyer les données pour enlever les lignes avec des valeurs manquantes
 data.dropna(subset=required_columns, inplace=True)
 
+# Ajouter du CSS pour améliorer la lisibilité des menus déroulants
+st.markdown("""
+    <style>
+    .stSelectbox div[role='listbox'] ul {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .stSelectbox label {
+        font-size: 1.2rem;
+    }
+    .stSelectbox div[role='combobox'] input {
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # Titre de l'application
 st.title("Application d'Antibioprophylaxie Chirurgicale")
 
@@ -56,3 +73,6 @@ if not result.empty:
         st.markdown(f"<span style='color: green; font-size: 20px;'>Antibioprophylaxie recommandée : {antibioprophylaxie}</span>", unsafe_allow_html=True)
 else:
     st.markdown("<span style='color: red; font-size: 20px;'>Aucune antibioprophylaxie recommandée trouvée pour cette combinaison.</span>", unsafe_allow_html=True)
+
+# Ajouter la mention en bas de l'écran
+st.markdown("<div style='position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px 0; background-color: #f8f9fa; color: #333; font-size: 14px;'>Recommandations d'antibioprophylaxie de la SFAR, au jour du 13/06/2024</div>", unsafe_allow_html=True)
