@@ -5,9 +5,6 @@ import pandas as pd
 file_path = "exemple_2_antibio.xlsx"  # Assurez-vous que le fichier est dans le même répertoire que le script
 data = pd.read_excel(file_path, engine='openpyxl')
 
-# Afficher les noms des colonnes pour vérification
-st.write("Noms des colonnes dans le fichier Excel:", data.columns.tolist())
-
 # Vérifier que les colonnes attendues sont présentes
 required_columns = ['Spécialité chirurgicale', 'Chirurgie Spécifique', 'Antibioprophylaxie']
 for col in required_columns:
