@@ -15,30 +15,6 @@ for col in required_columns:
 # Nettoyer les données pour enlever les lignes avec des valeurs manquantes
 data.dropna(subset=required_columns, inplace=True)
 
-# Ajouter du CSS pour améliorer la lisibilité des menus déroulants
-st.markdown("""
-    <style>
-    .stSelectbox div[role='listbox'] ul {
-        max-height: 200px;
-        overflow-y: auto;
-    }
-    .stSelectbox label {
-        font-size: 1.2rem;
-    }
-    .stSelectbox div[role='combobox'] input {
-        height: 2.5rem;
-        font-size: 1rem;
-        width: 100%;
-    }
-    .stSelectbox div[role='combobox'] {
-        width: 100%;
-    }
-    .stSelectbox div[role='listbox'] {
-        width: 100%;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 # Titre de l'application
 st.title("Application d'Antibioprophylaxie Chirurgicale")
 
