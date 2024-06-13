@@ -19,7 +19,7 @@ data.dropna(subset=required_columns, inplace=True)
 st.markdown("""
     <style>
     .stSelectbox div[role='listbox'] ul {
-        max-height: 200px;
+        max-height: 600px; /* Augmenter la hauteur de la liste */
         overflow-y: auto;
     }
     .stSelectbox label {
@@ -36,12 +36,9 @@ st.markdown("""
     .stSelectbox div[role='listbox'] {
         width: 100%;
     }
-    /* Augmenter la hauteur du menu déroulant pour la chirurgie spécifique */
-    .stSelectbox:nth-of-type(2) div[role='combobox'] {
-        height: 7.5rem; /* Augmenter la hauteur par 3 */
-    }
-    .stSelectbox:nth-of-type(2) div[role='listbox'] ul {
-        max-height: 600px; /* Augmenter la hauteur par 3 */
+    /* Forcer la hauteur du menu déroulant pour la chirurgie spécifique */
+    .stSelectbox div[role='combobox'] ul {
+        height: 600px; /* Augmenter la hauteur */
     }
     </style>
     """, unsafe_allow_html=True)
@@ -53,19 +50,19 @@ st.title("Application d'Antibioprophylaxie Chirurgicale")
 def search_in_list(search_term, options):
     return [option for option in options if search_term.lower() in option.lower()]
 
-# Sélection du type de chirurgie avec recherche
-type_chirurgie_search = st.text_input("Rechercher un type de chirurgie")
-type_chirurgie_options = data['Spécialité chirurgicale'].unique()
-filtered_type_chirurgie_options = search_in_list(type_chirurgie_search, type_chirurgie_options)
-type_chirurgie = st.selectbox("Type de Chirurgie", filtered_type_chirurgie_options)
-
-# Filtrer les chirurgies spécifiques basées sur le type de chirurgie sélectionné
-chirurgies_specifiques = data[data['Spécialité chirurgicale'] == type_chirurgie]['Chirurgie Spécifique'].unique()
+# Recherche globale pour la chirurgie spécifique
+chirurgie_specifique_search = st.text_input("Recherche", key="global_search")
+chirurgies_specifiques = data['Chirurgie Spécifique'].unique()
+filtered_chirurgies_specifiques = search_in_list(chirurgie_specifique_search, chirurgies_specifiques)
 
 # Sélection de la chirurgie spécifique avec recherche
-chirurgie_specifique_search = st.text_input("Rechercher une chirurgie spécifique")
-filtered_chirurgies_specifiques = search_in_list(chirurgie_specifique_search, chirurgies_specifiques)
 chirurgie_specifique = st.selectbox("Chirurgie Spécifique", filtered_chirurgies_specifiques)
+
+# Obtenir la spécialité chirurgicale correspondant à la chirurgie spécifique sélectionnée
+type_chirurgie = data[data['Chirurgie Spécifique'] == chirurgie_specifique]['Spécialité chirurgicale'].values[0]
+
+# Afficher la spécialité chirurgicale sélectionnée
+st.markdown(f"### Spécialité Chirurgicale: {type_chirurgie}")
 
 # Indiquer si le patient a une allergie
 allergie = st.checkbox("Le patient a-t-il une allergie aux antibiotiques ?")
