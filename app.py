@@ -54,9 +54,6 @@ chirurgie_specifique_search = st.text_input("Recherche", key="global_search")
 chirurgies_specifiques = data['Chirurgie Spécifique'].unique()
 filtered_chirurgies_specifiques = search_in_list(chirurgie_specifique_search, chirurgies_specifiques)
 
-# Sélection de la chirurgie spécifique avec recherche
-chirurgie_specifique = st.selectbox("Chirurgie Spécifique", filtered_chirurgies_specifiques)
-
 # Obtenir la spécialité chirurgicale correspondant à la chirurgie spécifique sélectionnée
 if chirurgie_specifique:
     type_chirurgie = data[data['Chirurgie Spécifique'] == chirurgie_specifique]['Spécialité chirurgicale'].values[0]
