@@ -36,12 +36,8 @@ st.markdown("""
     .stSelectbox div[role='listbox'] {
         width: 100%;
     }
-    /* Augmenter la hauteur du menu déroulant pour la chirurgie spécifique */
-    .stSelectbox:nth-of-type(2) div[role='combobox'] {
-        height: 7.5rem; /* Augmenter la hauteur par 3 */
-    }
-    .stSelectbox:nth-of-type(2) div[role='listbox'] ul {
-        max-height: 600px; /* Augmenter la hauteur par 3 */
+    .stTextInput {
+        width: 100%;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -59,7 +55,7 @@ chirurgies_specifiques = data['Chirurgie Spécifique'].unique()
 filtered_chirurgies_specifiques = search_in_list(chirurgie_specifique_search, chirurgies_specifiques)
 
 # Sélection de la chirurgie spécifique avec recherche
-chirurgie_specifique = st.selectbox("Chirurgie Spécifique (Recherche Globale)", filtered_chirurgies_specifiques)
+chirurgie_specifique = st.selectbox("Chirurgie Spécifique", filtered_chirurgies_specifiques)
 
 # Obtenir la spécialité chirurgicale correspondant à la chirurgie spécifique sélectionnée
 if chirurgie_specifique:
@@ -73,7 +69,7 @@ type_chirurgie_selection = st.selectbox("Type de Chirurgie", data['Spécialité 
 chirurgies_specifiques_selection = data[data['Spécialité chirurgicale'] == type_chirurgie_selection]['Chirurgie Spécifique'].unique()
 
 # Sélection de la chirurgie spécifique avec menu déroulant
-chirurgie_specifique_selection = st.selectbox("Chirurgie Spécifique", chirurgies_specifiques_selection)
+chirurgie_specifique_selection = st.selectbox("Chirurgie Spécifique (sélection par spécialité)", chirurgies_specifiques_selection)
 
 # Indiquer si le patient a une allergie
 allergie = st.checkbox("Le patient a-t-il une allergie aux antibiotiques ?")
