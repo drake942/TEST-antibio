@@ -28,6 +28,13 @@ st.markdown("""
     .stSelectbox div[role='combobox'] input {
         height: 2.5rem;
         font-size: 1rem;
+        width: 100%;
+    }
+    .stSelectbox div[role='combobox'] {
+        width: 100%;
+    }
+    .stSelectbox div[role='listbox'] {
+        width: 100%;
     }
     </style>
     """, unsafe_allow_html=True)
