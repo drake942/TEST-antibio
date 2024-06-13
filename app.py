@@ -5,17 +5,27 @@ import pandas as pd
 file_path = "exemple_2_antibio.xlsx"  # Assurez-vous que le fichier est dans le même répertoire que le script
 data = pd.read_excel(file_path, engine='openpyxl')
 
+# Afficher les noms des colonnes pour vérification
+st.write("Noms des colonnes dans le fichier Excel:", data.columns.tolist())
+
+# Vérifier que les colonnes attendues sont présentes
+required_columns = ['Spécialité chirurgicale', 'Chirurgie Spécifique', 'Antibioprophylaxie']
+for col in required_columns:
+    if col not in data.columns:
+        st.error(f"La colonne '{col}' est manquante dans le fichier Excel.")
+        st.stop()
+
 # Nettoyer les données pour enlever les lignes avec des valeurs manquantes
-data.dropna(subset=['Type de Chirurgie', 'Chirurgie Spécifique', 'Antibioprophylaxie'], inplace=True)
+data.dropna(subset=required_columns, inplace=True)
 
 # Titre de l'application
 st.title("Application d'Antibioprophylaxie Chirurgicale")
 
 # Sélection du type de chirurgie
-type_chirurgie = st.selectbox("Type de Chirurgie", data['Type de Chirurgie'].unique())
+type_chirurgie = st.selectbox("Type de Chirurgie", data['Spécialité chirurgicale'].unique())
 
 # Filtrer les chirurgies spécifiques basées sur le type de chirurgie sélectionné
-chirurgies_specifiques = data[data['Type de Chirurgie'] == type_chirurgie]['Chirurgie Spécifique'].unique()
+chirurgies_specifiques = data[data['Spécialité chirurgicale'] == type_chirurgie]['Chirurgie Spécifique'].unique()
 
 # Sélection de la chirurgie spécifique
 chirurgie_specifique = st.selectbox("Chirurgie Spécifique", chirurgies_specifiques)
@@ -24,7 +34,7 @@ chirurgie_specifique = st.selectbox("Chirurgie Spécifique", chirurgies_specifiq
 allergie = st.checkbox("Le patient a-t-il une allergie aux antibiotiques ?")
 
 # Filtrer les données pour obtenir l'antibioprophylaxie correspondante
-result = data[(data['Type de Chirurgie'] == type_chirurgie) & (data['Chirurgie Spécifique'] == chirurgie_specifique)]
+result = data[(data['Spécialité chirurgicale'] == type_chirurgie) & (data['Chirurgie Spécifique'] == chirurgie_specifique)]
 
 # Fonction pour déterminer l'antibioprophylaxie alternative en cas d'allergie
 def get_alternative_antibioprophylaxie(antibioprophylaxie):
