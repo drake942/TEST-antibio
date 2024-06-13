@@ -43,16 +43,16 @@ def get_alternative_antibioprophylaxie(antibioprophylaxie):
         return "Clindamycine 900mg IV si Céfazoline ou Bactrim 800/160 si Augmentin"
     return None
 
-# Afficher le résultat
+# Afficher le résultat avec une mise en forme optimisée
 if not result.empty:
     antibioprophylaxie = result.iloc[0]['Antibioprophylaxie']
     if allergie:
         alternative_antibioprophylaxie = get_alternative_antibioprophylaxie(antibioprophylaxie)
         if alternative_antibioprophylaxie:
-            st.write(f"Le patient est allergique. Antibioprophylaxie alternative recommandée : {alternative_antibioprophylaxie}")
+            st.markdown(f"<span style='color: red; font-size: 20px;'>Le patient est allergique. Antibioprophylaxie alternative recommandée : {alternative_antibioprophylaxie}</span>", unsafe_allow_html=True)
         else:
-            st.write("Le patient est allergique, mais aucune alternative spécifique n'est recommandée.")
+            st.markdown("<span style='color: red; font-size: 20px;'>Le patient est allergique, mais aucune alternative spécifique n'est recommandée.</span>", unsafe_allow_html=True)
     else:
-        st.write(f"Antibioprophylaxie recommandée : {antibioprophylaxie}")
+        st.markdown(f"<span style='color: green; font-size: 20px;'>Antibioprophylaxie recommandée : {antibioprophylaxie}</span>", unsafe_allow_html=True)
 else:
-    st.write("Aucune antibioprophylaxie recommandée trouvée pour cette combinaison.")
+    st.markdown("<span style='color: red; font-size: 20px;'>Aucune antibioprophylaxie recommandée trouvée pour cette combinaison.</span>", unsafe_allow_html=True)
