@@ -15,7 +15,7 @@ for col in required_columns:
 # Nettoyer les données pour enlever les lignes avec des valeurs manquantes
 data.dropna(subset=required_columns, inplace=True)
 
-# Ajouter du CSS pour améliorer la lisibilité des menus déroulants
+# Ajouter du CSS pour améliorer la lisibilité des menus déroulants et cacher l'élément spécifique
 st.markdown("""
     <style>
     .stSelectbox div[role='listbox'] ul {
@@ -36,8 +36,16 @@ st.markdown("""
     .stSelectbox div[role='listbox'] {
         width: 100%;
     }
-    .stTextInput {
-        width: 100%;
+    /* Augmenter la hauteur du menu déroulant pour la chirurgie spécifique */
+    .stSelectbox:nth-of-type(2) div[role='combobox'] {
+        height: 7.5rem; /* Augmenter la hauteur par 3 */
+    }
+    .stSelectbox:nth-of-type(2) div[role='listbox'] ul {
+        max-height: 600px; /* Augmenter la hauteur par 3 */
+    }
+    /* Cacher le selectbox de la recherche globale */
+    #recherche_globale {
+        display: none !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -53,6 +61,9 @@ def search_in_list(search_term, options):
 chirurgie_specifique_search = st.text_input("Recherche", key="global_search")
 chirurgies_specifiques = data['Chirurgie Spécifique'].unique()
 filtered_chirurgies_specifiques = search_in_list(chirurgie_specifique_search, chirurgies_specifiques)
+
+# Sélection de la chirurgie spécifique avec recherche (caché avec CSS)
+chirurgie_specifique = st.selectbox("Chirurgie Spécifique", filtered_chirurgies_specifiques, key="recherche_globale")
 
 # Obtenir la spécialité chirurgicale correspondant à la chirurgie spécifique sélectionnée
 if chirurgie_specifique:
@@ -99,4 +110,4 @@ else:
     st.markdown("<span style='color: red; font-size: 20px;'>Aucune antibioprophylaxie recommandée trouvée pour cette combinaison.</span>", unsafe_allow_html=True)
 
 # Ajouter la mention en bas de l'écran
-st.markdown("<div style='position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px 0; background-color: #f8f9fa; color: #333; font-size: 14px;'>Recommandations d'antibioprophylaxie de la SFAR, au jour du 13/06/2024</div>", unsafe_allow_html=True)
+st.markdown("<div style='position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px 0; background-color: #f8f9fa; color: #333; font-size
