@@ -26,12 +26,15 @@ if st.session_state.page == "Accueil":
     st.header("Bienvenue")
     if st.button("Recherche par intitulé opératoire"):
         st.session_state.page = "Recherche par intitulé opératoire"
+        st.experimental_rerun()
     if st.button("Recherche par catégorie"):
         st.session_state.page = "Recherche par catégorie"
+        st.experimental_rerun()
 
 elif st.session_state.page == "Recherche par intitulé opératoire":
     if st.button("Retour"):
         st.session_state.page = "Accueil"
+        st.experimental_rerun()
 
     # Recherche globale pour la chirurgie spécifique
     chirurgie_specifique_search = st.text_input("Recherche", key="global_search")
@@ -79,6 +82,7 @@ elif st.session_state.page == "Recherche par intitulé opératoire":
 elif st.session_state.page == "Recherche par catégorie":
     if st.button("Retour"):
         st.session_state.page = "Accueil"
+        st.experimental_rerun()
 
     # Sélection du type de chirurgie avec menu déroulant
     type_chirurgie_selection = st.selectbox("Type de Chirurgie", data['Spécialité chirurgicale'].unique())
